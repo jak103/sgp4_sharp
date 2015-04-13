@@ -17,7 +17,7 @@ using System;
 using System.Text;
 
 
-namespace SGP4
+namespace SGP4_Sharp
 {
 
 
@@ -208,12 +208,13 @@ namespace SGP4
     public double Inclination(bool in_degrees)
     {
       if (in_degrees)
-        {
-          return inclination_;
-        } else
-        {
-          return Util.DegreesToRadians(inclination_);
-        }
+      {
+        return inclination_;
+      }
+      else
+      {
+        return Util.DegreesToRadians(inclination_);
+      }
     }
 
     /**
@@ -224,12 +225,13 @@ namespace SGP4
     public double RightAscendingNode(bool in_degrees)
     {
       if (in_degrees)
-        {
-          return right_ascending_node_;
-        } else
-        {
-          return Util.DegreesToRadians(right_ascending_node_);
-        }
+      {
+        return right_ascending_node_;
+      }
+      else
+      {
+        return Util.DegreesToRadians(right_ascending_node_);
+      }
     }
 
     /**
@@ -249,12 +251,13 @@ namespace SGP4
     public double ArgumentPerigee(bool in_degrees)
     {
       if (in_degrees)
-        {
-          return argument_perigee_;
-        } else
-        {
-          return Util.DegreesToRadians(argument_perigee_);
-        }
+      {
+        return argument_perigee_;
+      }
+      else
+      {
+        return Util.DegreesToRadians(argument_perigee_);
+      }
     }
 
     /**
@@ -265,12 +268,13 @@ namespace SGP4
     public double MeanAnomaly(bool in_degrees)
     {
       if (in_degrees)
-        {
-          return mean_anomaly_;
-        } else
-        {
-          return Util.DegreesToRadians(mean_anomaly_);
-        }
+      {
+        return mean_anomaly_;
+      }
+      else
+      {
+        return Util.DegreesToRadians(mean_anomaly_);
+      }
     }
 
     /**
@@ -304,7 +308,7 @@ namespace SGP4
      * Dump this object to a string
      * @returns string
      */
-    public string ToString()
+    public override string ToString()
     {
       StringBuilder builder = new StringBuilder();
       builder.AppendLine(String.Format("Norad Number:         {0}", NoradNumber()));
@@ -327,44 +331,44 @@ namespace SGP4
     private void Initialize()
     {
       if (!IsValidLineLength(line_one_))
-        {
-          throw new TleException("Invalid length for line one");
-        }
+      {
+        throw new TleException("Invalid length for line one");
+      }
 
       if (!IsValidLineLength(line_two_))
-        {
-          throw new TleException("Invalid length for line two");
-        }
+      {
+        throw new TleException("Invalid length for line two");
+      }
 
       if (line_one_[0] != '1')
-        {
-          throw new TleException("Invalid line beginning for line one");
-        }
+      {
+        throw new TleException("Invalid line beginning for line one");
+      }
         
       if (line_two_[0] != '2')
-        {
-          throw new TleException("Invalid line beginning for line two");
-        }
+      {
+        throw new TleException("Invalid line beginning for line two");
+      }
 
       uint sat_number_1 = 0;
       uint sat_number_2 = 0;
 
       ExtractInteger(line_one_.Substring(TLE1_COL_NORADNUM,
-        TLE1_LEN_NORADNUM), ref sat_number_1);
+          TLE1_LEN_NORADNUM), ref sat_number_1);
       ExtractInteger(line_two_.Substring(TLE2_COL_NORADNUM,
-        TLE2_LEN_NORADNUM), ref sat_number_2);
+          TLE2_LEN_NORADNUM), ref sat_number_2);
 
       if (sat_number_1 != sat_number_2)
-        {
-          throw new TleException("Satellite numbers do not match");
-        }
+      {
+        throw new TleException("Satellite numbers do not match");
+      }
 
       norad_number_ = sat_number_1;
 
       if (name_ == "")
-        {
-          name_ = line_one_.Substring(TLE1_COL_NORADNUM, TLE1_LEN_NORADNUM);
-        }
+      {
+        name_ = line_one_.Substring(TLE1_COL_NORADNUM, TLE1_LEN_NORADNUM);
+      }
 
       int_designator_ = line_one_.Substring(TLE1_COL_INTLDESC_A,
         TLE1_LEN_INTLDESC_A + TLE1_LEN_INTLDESC_B + TLE1_LEN_INTLDESC_C);
@@ -373,33 +377,33 @@ namespace SGP4
       double day = 0.0;
 
       ExtractInteger(line_one_.Substring(TLE1_COL_EPOCH_A,
-        TLE1_LEN_EPOCH_A), ref year);
+          TLE1_LEN_EPOCH_A), ref year);
       ExtractDouble(line_one_.Substring(TLE1_COL_EPOCH_B,
-        TLE1_LEN_EPOCH_B), 4, ref day);
+          TLE1_LEN_EPOCH_B), 4, ref day);
       ExtractDouble(line_one_.Substring(TLE1_COL_MEANMOTIONDT2,
-        TLE1_LEN_MEANMOTIONDT2), 2, ref mean_motion_dt2_);
+          TLE1_LEN_MEANMOTIONDT2), 2, ref mean_motion_dt2_);
       ExtractExponential(line_one_.Substring(TLE1_COL_MEANMOTIONDDT6,
-        TLE1_LEN_MEANMOTIONDDT6), ref mean_motion_ddt6_);
+          TLE1_LEN_MEANMOTIONDDT6), ref mean_motion_ddt6_);
       ExtractExponential(line_one_.Substring(TLE1_COL_BSTAR,
-        TLE1_LEN_BSTAR), ref bstar_);
+          TLE1_LEN_BSTAR), ref bstar_);
 
       /*
      * line 2
      */
       ExtractDouble(line_two_.Substring(TLE2_COL_INCLINATION,
-        TLE2_LEN_INCLINATION), 4, ref inclination_);
+          TLE2_LEN_INCLINATION), 4, ref inclination_);
       ExtractDouble(line_two_.Substring(TLE2_COL_RAASCENDNODE,
-        TLE2_LEN_RAASCENDNODE), 4, ref right_ascending_node_);
+          TLE2_LEN_RAASCENDNODE), 4, ref right_ascending_node_);
       ExtractDouble(line_two_.Substring(TLE2_COL_ECCENTRICITY,
-        TLE2_LEN_ECCENTRICITY), -1, ref eccentricity_);
+          TLE2_LEN_ECCENTRICITY), -1, ref eccentricity_);
       ExtractDouble(line_two_.Substring(TLE2_COL_ARGPERIGEE,
-        TLE2_LEN_ARGPERIGEE), 4, ref argument_perigee_);
+          TLE2_LEN_ARGPERIGEE), 4, ref argument_perigee_);
       ExtractDouble(line_two_.Substring(TLE2_COL_MEANANOMALY,
-        TLE2_LEN_MEANANOMALY), 4, ref mean_anomaly_);
+          TLE2_LEN_MEANANOMALY), 4, ref mean_anomaly_);
       ExtractDouble(line_two_.Substring(TLE2_COL_MEANMOTION,
-        TLE2_LEN_MEANMOTION), 3, ref mean_motion_);
+          TLE2_LEN_MEANMOTION), 3, ref mean_motion_);
       ExtractInteger(line_two_.Substring(TLE2_COL_REVATEPOCH,
-        TLE2_LEN_REVATEPOCH), ref orbit_number_);
+          TLE2_LEN_REVATEPOCH), ref orbit_number_);
     
       if (year < 57)
         year += 2000;
@@ -420,36 +424,39 @@ namespace SGP4
 
 
       for (int i = 0; i != str.Length; ++i)
+      {
+        if (Char.IsDigit(str[i]))
         {
-          if (Char.IsDigit(str[i]))
-            {
-              found_digit = true;
-              temp = (temp * 10) + (uint)(str[i] - '0');
-            } else if (found_digit)
-            {
-              throw new TleException("Unexpected non digit");
-            } else if (str[i] != ' ')
-            {
-              throw new TleException("Invalid character");
-            }
+          found_digit = true;
+          temp = (temp * 10) + (uint)(str[i] - '0');
         }
+        else if (found_digit)
+        {
+          throw new TleException("Unexpected non digit");
+        }
+        else if (str[i] != ' ')
+        {
+          throw new TleException("Invalid character");
+        }
+      }
 
       if (!found_digit)
-        {
-          val = 0;
-        } else
-        {
-          val = temp;
-        }
+      {
+        val = 0;
+      }
+      else
+      {
+        val = temp;
+      }
     }
 
     private void ExtractDouble(string str, int point_pos, ref double val)
     {
       if (point_pos == -1)
-        {
-          // Add decimal point at the beginning
-          str = "0." + str;
-        }
+      {
+        // Add decimal point at the beginning
+        str = "0." + str;
+      }
       val = double.Parse(str);
 //
 //    string temp;
@@ -566,47 +573,52 @@ namespace SGP4
       string temp = "";
 
       for (int i = 0; i != str.Length; ++i)
+      {
+        if (i == 0)
         {
-          if (i == 0)
+          if (str[i] == '-' || str[i] == '+' || str[i] == ' ')
+          {
+            if (str[i] == '-')
             {
-              if (str[i] == '-' || str[i] == '+' || str[i] == ' ')
-                {
-                  if (str[i] == '-')
-                    {
-                      temp += str[i];
-                    }
-                  temp += '0';
-                  temp += '.';
-                } else
-                {
-                  throw new TleException("Invalid sign");
-                }
-            } else if (i == 0 + str.Length - 2)
-            {
-              if (str[i] == '-' || str[i] == '+')
-                {
-                  temp += 'e';
-                  temp += str[i];
-                } else
-                {
-                  throw new TleException("Invalid exponential sign");
-                }
-            } else
-            {
-              if (Char.IsDigit(str[i]))
-                {
-                  temp += str[i];
-                } else
-                {
-                  throw new TleException("Invalid digit");
-                }
+              temp += str[i];
             }
+            temp += '0';
+            temp += '.';
+          }
+          else
+          {
+            throw new TleException("Invalid sign");
+          }
         }
+        else if (i == 0 + str.Length - 2)
+        {
+          if (str[i] == '-' || str[i] == '+')
+          {
+            temp += 'e';
+            temp += str[i];
+          }
+          else
+          {
+            throw new TleException("Invalid exponential sign");
+          }
+        }
+        else
+        {
+          if (Char.IsDigit(str[i]))
+          {
+            temp += str[i];
+          }
+          else
+          {
+            throw new TleException("Invalid digit");
+          }
+        }
+      }
  
       if (!Double.TryParse(temp, out val))
-        {
-          throw new TleException("Failed to convert value to double");
-        }
+      {
+        throw new TleException("Failed to convert value to double");
+      }
     }
 
 

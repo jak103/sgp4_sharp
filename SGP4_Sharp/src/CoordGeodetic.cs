@@ -16,7 +16,7 @@
 using System.Text;
 
 
-namespace SGP4
+namespace SGP4_Sharp
 {
   /**
  * @brief Stores a geodetic location (latitude, longitude, altitude).
@@ -49,14 +49,15 @@ namespace SGP4
       bool is_radians = false)
     {
       if (is_radians)
-        {
-          latitude = lat;
-          longitude = lon;
-        } else
-        {
-          latitude = Util.DegreesToRadians(lat);
-          longitude = Util.DegreesToRadians(lon);
-        }
+      {
+        latitude = lat;
+        longitude = lon;
+      }
+      else
+      {
+        latitude = Util.DegreesToRadians(lat);
+        longitude = Util.DegreesToRadians(lon);
+      }
       altitude = alt;
     }
 
@@ -137,9 +138,9 @@ namespace SGP4
       if (latitude == geo.latitude &&
           longitude == geo.longitude &&
           altitude == geo.altitude)
-        {
-          equal = false;
-        }
+      {
+        equal = false;
+      }
       return equal;
     }
   }

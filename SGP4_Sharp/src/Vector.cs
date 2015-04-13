@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 using System;
+using System.Text;
 
 
-namespace SGP4
+namespace SGP4_Sharp
 {
   /**
  * @brief Generic vector
@@ -134,17 +135,15 @@ namespace SGP4
      * Converts this vector to a string
      * @returns this vector as a string
      */
-    public string ToString()
+    public override string ToString()
     {
-// TODO        std::stringstream ss;
-//        ss << std::right << std::fixed << std::setprecision(3);
-//        ss << "X: " << std::setw(9) << x;
-//        ss << ", Y: " << std::setw(9) << y;
-//        ss << ", Z: " << std::setw(9) << z;
-//        ss << ", W: " << std::setw(9) << w;
-//        return ss.str();
-
-      return "ToString on implemented";
+      StringBuilder builder = new StringBuilder();
+      builder.Append(String.Format("X: {0}", x));
+      builder.Append(String.Format(", Y: ", y));
+      builder.Append(String.Format(", Z: ", z));
+      builder.Append(String.Format(", W: ", w));
+      
+      return builder.ToString();
     }
 
     /** x value */

@@ -18,7 +18,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 
 
-namespace SGP4
+namespace SGP4_Sharp
 {
   /**
    * @brief Represents an instance in time.
@@ -37,12 +37,14 @@ namespace SGP4
     public const Int64 MaxValueTicks = 315537897599999999LL;
 
 
-    public static int[,] daysInMonth = new int[2, 13] {
+    public static int[,] daysInMonth = new int[2, 13]
+    {
       //  1   2   3   4   5   6   7   8   9   10  11  12
       { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
       { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
     };
-    public static int[,] cumulDaysInMonth = new int[2, 13] {
+    public static int[,] cumulDaysInMonth = new int[2, 13]
+    {
       //  1  2   3   4   5    6    7    8    9    10   11   12
       { 0, 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334 },
       { 0, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 }
@@ -121,21 +123,21 @@ namespace SGP4
      * @param[in] microsecond the microsecond
      */
     public void Initialise(int year,
-                            int month,
-                            int day,
-                            int hour,
-                            int minute,
-                            int second,
-                            int microsecond)
+                           int month,
+                           int day,
+                           int hour,
+                           int minute,
+                           int second,
+                           int microsecond)
     {
       if (!IsValidYearMonthDay(year, month, day) ||
           hour < 0 || hour > 23 ||
           minute < 0 || minute > 59 ||
           second < 0 || second > 59 ||
           microsecond < 0 || microsecond > 999999)
-        {
-          throw new Exception();
-        }
+      {
+        throw new Exception();
+      }
       m_encoded = (ulong)(new TimeSpan(
         AbsoluteDays(year, month, day),
         hour,
@@ -176,9 +178,9 @@ namespace SGP4
     public static bool IsLeapYear(int year)
     {
       if (!IsValidYear(year))
-        {
-          throw new Exception();
-        }
+      {
+        throw new Exception();
+      }
 
       return (((year % 4) == 0 && (year % 100) != 0) || (year % 400) == 0);
     }
@@ -192,9 +194,9 @@ namespace SGP4
     {
       bool valid = true;
       if (year < 1 || year > 9999)
-        {
-          valid = false;
-        }
+      {
+        valid = false;
+      }
       return valid;
     }
 
@@ -208,15 +210,16 @@ namespace SGP4
     {
       bool valid = true;
       if (IsValidYear(year))
-        {
-          if (month < 1 || month > 12)
-            {
-              valid = false;
-            }
-        } else
+      {
+        if (month < 1 || month > 12)
         {
           valid = false;
         }
+      }
+      else
+      {
+        valid = false;
+      }
       return valid;
     }
 
@@ -231,15 +234,16 @@ namespace SGP4
     {
       bool valid = true;
       if (IsValidYearMonth(year, month))
-        {
-          if (day < 1 || day > DaysInMonth(year, month))
-            {
-              valid = false;
-            }
-        } else
+      {
+        if (day < 1 || day > DaysInMonth(year, month))
         {
           valid = false;
         }
+      }
+      else
+      {
+        valid = false;
+      }
       return valid;
     }
 
@@ -252,19 +256,20 @@ namespace SGP4
     public static int DaysInMonth(int year, int month)
     {
       if (!IsValidYearMonth(year, month))
-        {
-          throw new Exception();
-        }
+      {
+        throw new Exception();
+      }
 
       int result;
 
       if (IsLeapYear(year))
-        {
-          result = daysInMonth[1, month];
-        } else
-        {
-          result = daysInMonth[0, month];
-        }
+      {
+        result = daysInMonth[1, month];
+      }
+      else
+      {
+        result = daysInMonth[0, month];
+      }
 
       return result;
     }
@@ -279,19 +284,20 @@ namespace SGP4
     public int DayOfYear(int year, int month, int day)
     {
       if (!IsValidYearMonthDay(year, month, day))
-        {
-          throw new Exception();
-        }
+      {
+        throw new Exception();
+      }
 
       int daysThisYear = day;
 
       if (IsLeapYear(year))
-        {
-          daysThisYear += cumulDaysInMonth[1, month];
-        } else
-        {
-          daysThisYear += cumulDaysInMonth[0, month];
-        }
+      {
+        daysThisYear += cumulDaysInMonth[1, month];
+      }
+      else
+      {
+        daysThisYear += cumulDaysInMonth[0, month];
+      }
 
       return daysThisYear;
     }
@@ -368,12 +374,13 @@ namespace SGP4
       int ret = 0;
 
       if (m_encoded < dt.m_encoded)
-        {
-          return -1;
-        } else if (m_encoded > dt.m_encoded)
-        {
-          return 1;
-        }
+      {
+        return -1;
+      }
+      else if (m_encoded > dt.m_encoded)
+      {
+        return 1;
+      }
 
       return ret;
     }
@@ -393,14 +400,15 @@ namespace SGP4
       year += months / 12;
 
       if (month < 1)
-        {
-          month += 12;
-          --year;
-        } else if (month > 12)
-        {
-          month -= 12;
-          ++year;
-        }
+      {
+        month += 12;
+        --year;
+      }
+      else if (month > 12)
+      {
+        month -= 12;
+        ++year;
+      }
 
       int maxday = DaysInMonth(year, month);
       day = Math.Min(day, maxday);
@@ -472,12 +480,12 @@ namespace SGP4
        */
       int num100 = totalDays / 36524;
       if (num100 == 4)
-        {
-          /*
+      {
+        /*
          * last day of the last leap century
          */
-          num100 = 3;
-        }
+        num100 = 3;
+      }
       totalDays -= num100 * 36524;
       /*
        * number of 4 year cycles
@@ -489,12 +497,12 @@ namespace SGP4
        */
       int num1 = totalDays / 365;
       if (num1 == 4)
-        {
-          /*
+      {
+        /*
          * last day of the last leap olympiad
          */
-          num1 = 3;
-        }
+        num1 = 3;
+      }
       totalDays -= num1 * 365;
 
       /*
@@ -507,18 +515,19 @@ namespace SGP4
        */
       int daysInMonthIndex;
       if (IsLeapYear(year))
-        {
-          daysInMonthIndex = 1;
-        } else
-        {
-          daysInMonthIndex = 0;
-        }
+      {
+        daysInMonthIndex = 1;
+      }
+      else
+      {
+        daysInMonthIndex = 0;
+      }
 
       month = 1;
       while (totalDays >= daysInMonth[daysInMonthIndex, month] && month <= 12)
-        {
-          totalDays -= daysInMonth[daysInMonthIndex, month++];
-        }
+      {
+        totalDays -= daysInMonth[daysInMonthIndex, month++];
+      }
 
       day = totalDays + 1;
     }
@@ -625,22 +634,41 @@ namespace SGP4
       return Util.WrapTwoPI(ToGreenwichSiderealTime() + lon);
     }
 
+    public System.DateTime ToSystemDateTime()
+    {
+      System.DateTime dt = new System.DateTime(this.Year(), this.Month(), this.Day(), this.Hour(), this.Minute(), this.Second());
+
+      return dt;
+    }
+
     public override string ToString()
     {
-      StringBuilder builder = new StringBuilder();
-      int year = 0;
-      int month = 0;
-      int day = 0;
-      FromTicks(ref year, ref month, ref day);
-                
-      builder.Append(String.Format("{0}-", year));
-      builder.Append(String.Format("{0}-", month));
-      builder.Append(String.Format("{0} ", day));
-      builder.Append(String.Format("{0}:", Hour()));
-      builder.Append(String.Format("{0}:", Minute()));
-      builder.Append(String.Format("{0}.", Second()));
-      builder.Append(String.Format("{0} UTC", Microsecond()));
-      return builder.ToString();
+      return this.ToSystemDateTime().ToString();
+//
+//      StringBuilder builder = new StringBuilder();
+//      int year = 0;
+//      int month = 0;
+//      int day = 0;
+//      FromTicks(ref year, ref month, ref day);
+//                
+//      builder.Append(String.Format("{0}-", year));
+//      builder.Append(String.Format("{0}-", month));
+//      builder.Append(String.Format("{0} ", day));
+//      builder.Append(String.Format("{0}:", Hour()));
+//      builder.Append(String.Format("{0}:", Minute()));
+//      builder.Append(String.Format("{0}.", Second()));
+//      builder.Append(String.Format("{0} UTC", Microsecond()));
+//      return builder.ToString();
+    }
+
+    public static DateTime Parse(string dateTimeText)
+    {
+      //2015-4-13 0:5:39.0 UTC
+      DateTime dt = new DateTime(System.DateTime.Parse(dateTimeText));
+
+            
+
+      return dt;
     }
 
 
@@ -656,9 +684,9 @@ namespace SGP4
     {
       Int64 res = (long)dt.Ticks() + ts.Ticks();
       if (res < 0 || res > MaxValueTicks)
-        {
-          throw new Exception();
-        }
+      {
+        throw new Exception();
+      }
 
       return new DateTime((ulong)res);
     }
@@ -667,9 +695,9 @@ namespace SGP4
     {
       Int64 res = (long)dt.Ticks() - ts.Ticks();
       if (res < 0 || res > MaxValueTicks)
-        {
-          throw new Exception();
-        }
+      {
+        throw new Exception();
+      }
 
       return new DateTime((ulong)res);
     }

@@ -15,7 +15,7 @@
  */
 
 
-namespace SGP4
+namespace SGP4_Sharp
 {
   /**
  * @brief Stores a topocentric location (azimuth, elevation, range and range
@@ -133,12 +133,12 @@ namespace SGP4
     {
       bool equal = false;
       if (azimuth == topo.azimuth &&
-            elevation == topo.elevation &&
-            range == topo.range &&
-            range_rate == topo.range_rate)
-        {
-          equal = true;
-        }
+          elevation == topo.elevation &&
+          range == topo.range &&
+          range_rate == topo.range_rate)
+      {
+        equal = true;
+      }
       return equal;
     }
   }

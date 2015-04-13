@@ -16,7 +16,7 @@
 using System;
 using System.IO;
 
-namespace SGP4
+namespace SGP4_Sharp
 {
 
   /**
@@ -111,14 +111,14 @@ namespace SGP4
       double az = Math.Atan(-top_e / top_s);
 
       if (top_s > 0.0)
-        {
-          az += Global.kPI;
-        }
+      {
+        az += Global.kPI;
+      }
 
       if (az < 0.0)
-        {
-          az += 2.0 * Global.kPI;
-        }
+      {
+        az += 2.0 * Global.kPI;
+      }
             
       double el = Math.Asin(top_z / range.w);
       double rate = range.Dot(range_rate) / range.w;
@@ -138,9 +138,9 @@ namespace SGP4
     private void Update(DateTime dt)
     {
       if (m_eci != dt)
-        {
-          m_eci.Update(dt, m_geo);
-        }
+      {
+        m_eci.Update(dt, m_geo);
+      }
     }
        
   }

@@ -16,7 +16,7 @@
 using System;
 
 
-namespace SGP4
+namespace SGP4_Sharp
 {
   /**
  * @brief The exception that the Tle class throws on an error.

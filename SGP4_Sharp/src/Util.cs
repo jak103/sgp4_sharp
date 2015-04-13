@@ -16,7 +16,7 @@
 using System;
 
 
-namespace SGP4
+namespace SGP4_Sharp
 {
   public class Util
   {
@@ -35,9 +35,9 @@ namespace SGP4
     public static double Mod(double x, double y)
     {
       if (y == 0)
-        {
-          return x;
-        }
+      {
+        return x;
+      }
 
       return x - y * Math.Floor(x / y);
     }
@@ -75,24 +75,27 @@ namespace SGP4
     public static double AcTan(double sinx, double cosx)
     {
       if (cosx == 0.0)
+      {
+        if (sinx > 0.0)
         {
-          if (sinx > 0.0)
-            {
-              return Global.kPI / 2.0;
-            } else
-            {
-              return 3.0 * Global.kPI / 2.0;
-            }
-        } else
-        {
-          if (cosx > 0.0)
-            {
-              return Math.Atan(sinx / cosx);
-            } else
-            {
-              return Global.kPI + Math.Atan(sinx / cosx);
-            }
+          return Global.kPI / 2.0;
         }
+        else
+        {
+          return 3.0 * Global.kPI / 2.0;
+        }
+      }
+      else
+      {
+        if (cosx > 0.0)
+        {
+          return Math.Atan(sinx / cosx);
+        }
+        else
+        {
+          return Global.kPI + Math.Atan(sinx / cosx);
+        }
+      }
     }
 
     public static void TrimLeft(string s)

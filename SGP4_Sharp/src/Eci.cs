@@ -16,7 +16,7 @@
 using System;
 
 
-namespace SGP4
+namespace SGP4_Sharp
 {
   /**
  * @brief Stores an Earth-centered inertial position for a particular time.
@@ -127,10 +127,10 @@ namespace SGP4
       double theta = Util.AcTan(m_position.y, m_position.x);
      
       double lon = Util.WrapNegPosPI(theta
-                   - m_dt.ToGreenwichSiderealTime());
+                     - m_dt.ToGreenwichSiderealTime());
      
       double r = Math.Sqrt((m_position.x * m_position.x)
-                 + (m_position.y * m_position.y));
+                   + (m_position.y * m_position.y));
      
       double e2 = Global.kF * (2.0 - Global.kF);
       
@@ -140,13 +140,13 @@ namespace SGP4
       int cnt = 0;
 
       do
-        {
-          phi = lat;
-          double sinphi = Math.Sin(phi);
-          c = 1.0 / Math.Sqrt(1.0 - e2 * sinphi * sinphi);
-          lat = Util.AcTan(m_position.z + Global.kXKMPER * c * e2 * sinphi, r);
-          cnt++;
-        } while (Math.Abs(lat - phi) >= 1e-10 && cnt < 10);
+      {
+        phi = lat;
+        double sinphi = Math.Sin(phi);
+        c = 1.0 / Math.Sqrt(1.0 - e2 * sinphi * sinphi);
+        lat = Util.AcTan(m_position.z + Global.kXKMPER * c * e2 * sinphi, r);
+        cnt++;
+      } while (Math.Abs(lat - phi) >= 1e-10 && cnt < 10);
 
       double alt = r / Math.Cos(lat) - Global.kXKMPER * c;
 

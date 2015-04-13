@@ -15,8 +15,9 @@
  */
 using System;
 using System.Text;
+using System.Runtime.Remoting.Messaging;
 
-namespace SGP4
+namespace SGP4_Sharp
 {
 
 
@@ -44,151 +45,175 @@ namespace SGP4
     // 1582-Oct-15
     public const Int64 GregorianStart = 49916304000000000LL;
 
-    public TimeSpan (Int64 ticks)
+    public TimeSpan(Int64 ticks)
     {
       m_ticks = ticks;
     }
 
-    public TimeSpan (int hours, int minutes, int seconds)
+    public TimeSpan(int hours, int minutes, int seconds)
     {
-      CalculateTicks (0, hours, minutes, seconds, 0);
+      CalculateTicks(0, hours, minutes, seconds, 0);
     }
 
-    public TimeSpan (int days, int hours, int minutes, int seconds)
+    public TimeSpan(int days, int hours, int minutes, int seconds)
     {
-      CalculateTicks (days, hours, minutes, seconds, 0);
+      CalculateTicks(days, hours, minutes, seconds, 0);
     }
 
-    public TimeSpan (int days, int hours, int minutes, int seconds, int microseconds)
+    public TimeSpan(int days, int hours, int minutes, int seconds, int microseconds)
     {
-      CalculateTicks (days, hours, minutes, seconds, microseconds);
+      CalculateTicks(days, hours, minutes, seconds, microseconds);
     }
 
-    public TimeSpan Add (TimeSpan ts)
+    public TimeSpan Add(TimeSpan ts)
     {
-      return new TimeSpan (m_ticks + ts.m_ticks);
+      return new TimeSpan(m_ticks + ts.m_ticks);
     }
 
-    public TimeSpan Subtract (TimeSpan ts)
+    public TimeSpan Subtract(TimeSpan ts)
     {
-      return new TimeSpan (m_ticks - ts.m_ticks);
+      return new TimeSpan(m_ticks - ts.m_ticks);
     }
 
-    public int Compare (TimeSpan ts)
+    public int Compare(TimeSpan ts)
     {
       int ret = 0;
 
-      if (m_ticks < ts.m_ticks) {
+      if (m_ticks < ts.m_ticks)
+      {
         ret = -1;
       }
-      if (m_ticks > ts.m_ticks) {
+      if (m_ticks > ts.m_ticks)
+      {
         ret = 1;
       }
       return ret;
     }
 
-    public bool Equals (TimeSpan ts)
+    public override bool Equals(Object o)
+    {
+      bool result = false;
+      TimeSpan ts = o as TimeSpan;
+      
+      if (ts != null)
+      {
+        result = this.Equals(ts);
+      }
+
+      return result;
+    }
+
+    public override int GetHashCode()
+    {
+      System.TimeSpan ts = new System.TimeSpan(m_ticks);
+      return ts.GetHashCode();
+    }
+
+    public bool Equals(TimeSpan ts)
     {
       return m_ticks == ts.m_ticks;
     }
 
-    public int Days ()
+    public int Days()
     {
       return (int)(m_ticks / TicksPerDay);
     }
 
-    public int Hours ()
+    public int Hours()
     {
       return (int)(m_ticks % TicksPerDay / TicksPerHour);
     }
 
-    public int Minutes ()
+    public int Minutes()
     {
       return (int)(m_ticks % TicksPerHour / TicksPerMinute);
     }
 
-    public int Seconds ()
+    public int Seconds()
     {
       return (int)(m_ticks % TicksPerMinute / TicksPerSecond);
     }
 
-    public int Milliseconds ()
+    public int Milliseconds()
     {
       return (int)(m_ticks % TicksPerSecond / TicksPerMillisecond);
     }
 
-    public int Microseconds ()
+    public int Microseconds()
     {
       return (int)(m_ticks % TicksPerSecond / TicksPerMicrosecond);
     }
 
-    public Int64 Ticks ()
+    public Int64 Ticks()
     {
       return m_ticks;
     }
 
-    public double TotalDays ()
+    public double TotalDays()
     {
       return (double)(m_ticks) / TicksPerDay;
     }
 
-    public double TotalHours ()
+    public double TotalHours()
     {
       return (double)(m_ticks) / TicksPerHour;
     }
 
-    public double TotalMinutes ()
+    public double TotalMinutes()
     {
       return (double)(m_ticks) / TicksPerMinute;
     }
 
-    public double TotalSeconds ()
+    public double TotalSeconds()
     {
       return (double)(m_ticks) / TicksPerSecond;
     }
 
-    public double TotalMilliseconds ()
+    public double TotalMilliseconds()
     {
       return (double)(m_ticks) / TicksPerMillisecond;
     }
 
-    public double TotalMicroseconds ()
+    public double TotalMicroseconds()
     {
       return (double)(m_ticks) / TicksPerMicrosecond;
     }
 
-    public override string ToString ()
+    public override string ToString()
     {
-      StringBuilder builder = new StringBuilder ();
+      StringBuilder builder = new StringBuilder();
 
 
 
-      if (m_ticks < 0) {
-        builder.Append ("-");
+      if (m_ticks < 0)
+      {
+        builder.Append("-");
       }
 
-      if (Days () != 0) {
-        builder.Append (String.Format ("{0}.", Days ()));
+      if (Days() != 0)
+      {
+        builder.Append(String.Format("{0}.", Days()));
       }
 
-      builder.Append (String.Format ("{0}:", Hours ()));
-      builder.Append (String.Format ("{0}:", Minutes ()));
-      builder.Append (String.Format ("{0}", Seconds ()));
+      builder.Append(String.Format("{0}:", Hours()));
+      builder.Append(String.Format("{0}:", Minutes()));
+      builder.Append(String.Format("{0}", Seconds()));
 
-      if (Microseconds () != 0) {
-        builder.Append (String.Format (".{0}", Microseconds ()));
+      if (Microseconds() != 0)
+      {
+        builder.Append(String.Format(".{0}", Microseconds()));
       }
 
-      return builder.ToString ();
+      return builder.ToString();
     }
 
     private Int64 m_ticks;
 
-    private void CalculateTicks (int days,
-                                 int hours,
-                                 int minutes,
-                                 int seconds,
-                                 int microseconds)
+    private void CalculateTicks(int days,
+                                int hours,
+                                int minutes,
+                                int seconds,
+                                int microseconds)
     {
       m_ticks = days * TicksPerDay +
       (hours * 3600LL + minutes * 60LL + seconds) * TicksPerSecond +
@@ -200,44 +225,44 @@ namespace SGP4
     //  return strm << t.ToString();
     //}
 
-    public static TimeSpan operator + (TimeSpan ts1, TimeSpan ts2)
+    public static TimeSpan operator +(TimeSpan ts1, TimeSpan ts2)
     {
-      return ts1.Add (ts2);
+      return ts1.Add(ts2);
     }
 
-    public static TimeSpan operator- (TimeSpan ts1, TimeSpan ts2)
+    public static TimeSpan operator-(TimeSpan ts1, TimeSpan ts2)
     {
-      return ts1.Subtract (ts2);
+      return ts1.Subtract(ts2);
     }
 
-    public  static bool operator== (TimeSpan ts1, TimeSpan ts2)
+    public  static bool operator==(TimeSpan ts1, TimeSpan ts2)
     {
-      return ts1.Equals (ts2);
+      return ts1.Equals(ts2);
     }
 
-    public  static bool operator> (TimeSpan ts1, TimeSpan ts2)
+    public  static bool operator>(TimeSpan ts1, TimeSpan ts2)
     {
-      return (ts1.Compare (ts2) > 0);
+      return (ts1.Compare(ts2) > 0);
     }
 
-    public static  bool operator>= (TimeSpan ts1, TimeSpan ts2)
+    public static  bool operator>=(TimeSpan ts1, TimeSpan ts2)
     {
-      return (ts1.Compare (ts2) >= 0);
+      return (ts1.Compare(ts2) >= 0);
     }
 
-    public static  bool operator!= (TimeSpan ts1, TimeSpan ts2)
+    public static  bool operator!=(TimeSpan ts1, TimeSpan ts2)
     {
-      return !ts1.Equals (ts2);
+      return !ts1.Equals(ts2);
     }
 
-    public static  bool operator< (TimeSpan ts1, TimeSpan ts2)
+    public static  bool operator<(TimeSpan ts1, TimeSpan ts2)
     {
-      return (ts1.Compare (ts2) < 0);
+      return (ts1.Compare(ts2) < 0);
     }
 
-    public static  bool operator<= (TimeSpan ts1, TimeSpan ts2)
+    public static  bool operator<=(TimeSpan ts1, TimeSpan ts2)
     {
-      return (ts1.Compare (ts2) <= 0);
+      return (ts1.Compare(ts2) <= 0);
     }
   }
 }

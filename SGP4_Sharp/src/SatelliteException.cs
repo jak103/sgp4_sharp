@@ -15,7 +15,7 @@
  */
 using System;
 
-namespace SGP4
+namespace SGP4_Sharp
 {
   /**
  * @brief The exception that the SGP4 class throws upon an error.
