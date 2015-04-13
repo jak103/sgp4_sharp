@@ -26,7 +26,7 @@ namespace SGP4
   /**
  * @brief The simplified perturbations model 4 propagater.
  */
-  class SGP4
+  public class SGP4
   {
 
     public SGP4(Tle tle)
@@ -540,8 +540,8 @@ namespace SGP4
         {
           double delomg = nearspace_consts_.omgcof * tsince;
           double delm = nearspace_consts_.xmcof
-                      * (Math.Pow(1.0 + common_consts_.eta * Math.Cos(xmdf), 3.0)
-                      * -nearspace_consts_.delmo);
+                        * (Math.Pow(1.0 + common_consts_.eta * Math.Cos(xmdf), 3.0)
+                        * -nearspace_consts_.delmo);
           double temp = delomg + delm;
 
           xmp += temp;
@@ -882,17 +882,17 @@ namespace SGP4
           double z3 = 3.0 * (a3 * a3 + a4 * a4) + z33 * eosq;
 
           double z11 = -6.0 * a1 * a5
-                     + eosq * (-24.0 * x1 * x7 - 6.0 * x3 * x5);
+                       + eosq * (-24.0 * x1 * x7 - 6.0 * x3 * x5);
           double z12 = -6.0 * (a1 * a6 + a3 * a5)
-                     + eosq * (-24.0 * (x2 * x7 + x1 * x8) - 6.0 * (x3 * x6 + x4 * x5));
+                       + eosq * (-24.0 * (x2 * x7 + x1 * x8) - 6.0 * (x3 * x6 + x4 * x5));
           double z13 = -6.0 * a3 * a6
-                     + eosq * (-24.0 * x2 * x8 - 6.0 * x4 * x6);
+                       + eosq * (-24.0 * x2 * x8 - 6.0 * x4 * x6);
           double z21 = 6.0 * a2 * a5
-                     + eosq * (24.0 * x1 * x5 - 6.0 * x3 * x7);
+                       + eosq * (24.0 * x1 * x5 - 6.0 * x3 * x7);
           double z22 = 6.0 * (a4 * a5 + a2 * a6)
-                     + eosq * (24.0 * (x2 * x5 + x1 * x6) - 6.0 * (x4 * x7 + x3 * x8));
+                       + eosq * (24.0 * (x2 * x5 + x1 * x6) - 6.0 * (x4 * x7 + x3 * x8));
           double z23 = 6.0 * a4 * a6
-                     + eosq * (24.0 * x2 * x6 - 6.0 * x4 * x8);
+                       + eosq * (24.0 * x2 * x6 - 6.0 * x4 * x8);
 
           z1 = z1 + z1 + betao2 * z31;
           z2 = z2 + z2 + betao2 * z32;
@@ -918,7 +918,7 @@ namespace SGP4
          * shdq = (-zn * s2 * (z21 + z23)) / sinio
          */
           if (elements_.Inclination() < 5.2359877e-2
-            || elements_.Inclination() > Global.kPI - 5.2359877e-2)
+              || elements_.Inclination() > Global.kPI - 5.2359877e-2)
             {
               shdq = 0.0;
             } else
@@ -998,7 +998,7 @@ namespace SGP4
           double g300 = 1.0 + eosq * (-6.0 + 6.60937 * eosq);
           double f220 = 0.75 * (1.0 + cosio) * (1.0 + cosio);
           double f311 = 0.9375 * sinio * sinio * (1.0 + 3.0 * cosio)
-                      - 0.75 * (1.0 + cosio);
+                        - 0.75 * (1.0 + cosio);
           double f330 = 1.0 + cosio;
           f330 = 1.875 * f330 * f330 * f330;
           deepspace_consts_.del1 = 3.0 * elements_.RecoveredMeanMotion()
@@ -1020,8 +1020,8 @@ namespace SGP4
           + deepspace_consts_.ssg
           + deepspace_consts_.ssh;
         } else if (elements_.RecoveredMeanMotion() < 8.26e-3
-                 || elements_.RecoveredMeanMotion() > 9.24e-3
-                 || elements_.Eccentricity() < 0.5)
+                   || elements_.RecoveredMeanMotion() > 9.24e-3
+                   || elements_.Eccentricity() < 0.5)
         {
           initialise_integrator = false;
         } else
@@ -1108,18 +1108,18 @@ namespace SGP4
           double f441 = 35.0 * sini2 * f220;
           double f442 = 39.3750 * sini2 * sini2;
           double f522 = 9.84375 * sinio
-                      * (sini2 * (1.0 - 2.0 * cosio - 5.0 * theta2)
-                      + 0.33333333 * (-2.0 + 4.0 * cosio + 6.0 * theta2));
+                        * (sini2 * (1.0 - 2.0 * cosio - 5.0 * theta2)
+                        + 0.33333333 * (-2.0 + 4.0 * cosio + 6.0 * theta2));
           double f523 = sinio
-                      * (4.92187512 * sini2 * (-2.0 - 4.0 * cosio + 10.0 * theta2)
-                      + 6.56250012 * (1.0 + 2.0 * cosio - 3.0 * theta2));
+                        * (4.92187512 * sini2 * (-2.0 - 4.0 * cosio + 10.0 * theta2)
+                        + 6.56250012 * (1.0 + 2.0 * cosio - 3.0 * theta2));
           double f542 = 29.53125 * sinio * (2.0 - 8.0 * cosio + theta2 *
-                      (-12.0 + 8.0 * cosio + 10.0 * theta2));
+                        (-12.0 + 8.0 * cosio + 10.0 * theta2));
           double f543 = 29.53125 * sinio * (-2.0 - 8.0 * cosio + theta2 *
-                      (12.0 + 8.0 * cosio - 10.0 * theta2));
+                        (12.0 + 8.0 * cosio - 10.0 * theta2));
 
           double xno2 = elements_.RecoveredMeanMotion()
-                      * elements_.RecoveredMeanMotion();
+                        * elements_.RecoveredMeanMotion();
           double ainv2 = aqnv * aqnv;
 
           double temp1 = 3.0 * xno2 * ainv2;
@@ -1367,8 +1367,8 @@ namespace SGP4
          *     integrator_params_.atime, only integrate away from zero)
          */
           if (Math.Abs(tsince) < STEP ||
-            tsince * integrator_params_.atime <= 0.0 ||
-            Math.Abs(tsince) < Math.Abs(integrator_params_.atime))
+              tsince * integrator_params_.atime <= 0.0 ||
+              Math.Abs(tsince) < Math.Abs(integrator_params_.atime))
             {
               /*
              * restart from epoch
@@ -1425,8 +1425,8 @@ namespace SGP4
           + integrator_params_.values_t.xndot * ft
           + integrator_params_.values_t.xnddt * ft * ft * 0.5;
           double xl = integrator_params_.xli
-                    + integrator_params_.values_t.xldot * ft
-                    + integrator_params_.values_t.xndot * ft * ft * 0.5;
+                      + integrator_params_.values_t.xldot * ft
+                      + integrator_params_.values_t.xndot * ft * ft * 0.5;
           double temp = -xnodes + deepspace_consts_.gsto + tsince * Global.kTHDT;
 
           if (deepspace_consts_.synchronous_flag)
@@ -1468,7 +1468,7 @@ namespace SGP4
         } else
         {
           double xomi = elements_.ArgumentPerigee()
-                      + common_consts_.omgdot * integrator_params_.atime;
+                        + common_consts_.omgdot * integrator_params_.atime;
           double x2omi = xomi + xomi;
           double x2li = integrator_params_.xli + integrator_params_.xli;
 

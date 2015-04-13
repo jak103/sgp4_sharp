@@ -16,25 +16,25 @@
 using System;
 
 namespace SGP4
- {
-/**
+{
+  /**
  * @brief The exception that the SGP4 class throws upon an error.
  */
-class SatelliteException : Exception
-{
+  public class SatelliteException : Exception
+  {
 
     public SatelliteException(string message)
     {
-        message_ = (message);
+      message_ = (message);
     }
 
 
-    public string what() 
+    public string what()
     {
-        return message_;
+      return message_;
     }
-        
+
     private string message_;
-};
+  };
 
 }

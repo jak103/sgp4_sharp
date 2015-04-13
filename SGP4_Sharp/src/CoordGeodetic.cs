@@ -23,7 +23,7 @@ namespace SGP4
  *
  * Internally the values are stored in radians and kilometres.
  */
-  struct CoordGeodetic
+  public struct CoordGeodetic
   {
     /**
      * Default constructor

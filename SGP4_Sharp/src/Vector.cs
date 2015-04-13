@@ -23,7 +23,7 @@ namespace SGP4
  *
  * Stores x, y, z, w
  */
-  struct Vector
+  public struct Vector
   {
     /**
      * Default constructor

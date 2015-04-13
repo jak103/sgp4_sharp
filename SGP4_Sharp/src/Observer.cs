@@ -22,7 +22,7 @@ namespace SGP4
   /**
  * @brief Stores an observers location in Eci coordinates.
  */
-  class Observer
+  public class Observer
   {
     /** the observers position */
     private CoordGeodetic m_geo;

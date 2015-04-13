@@ -17,21 +17,21 @@ using System;
 
 
 namespace SGP4
- {
-/**
+{
+  /**
  * @brief The exception that the Tle class throws on an error.
  *
  * The exception that the Tle decoder will throw on an error.
  */
-class TleException : Exception
-{
+  public class TleException : Exception
+  {
     /**
      * Constructor
      * @param message Exception message
      */
     public TleException(string message)
     {
-        m_message = message;
+      m_message = message;
     }
 
     /**
@@ -40,11 +40,11 @@ class TleException : Exception
      */
     public string what()
     {
-        return m_message;
+      return m_message;
     }
-        
+
     /** the exception message */
     private string m_message;
-}
+  }
 
 }

@@ -17,23 +17,23 @@ using System;
 
 
 namespace SGP4
- {
-/**
+{
+  /**
  * @brief The exception that the SGP4 class throws when a satellite decays.
  */
-class DecayedException : Exception
-{
+  public class DecayedException : Exception
+  {
     /**
      * Constructor
      * @param[in] dt time of the event
      * @param[in] pos position of the satellite at dt
      * @param[in] vel velocity of the satellite at dt
      */
-    public DecayedException( DateTime dt, Vector pos, Vector vel)
+    public DecayedException(DateTime dt, Vector pos, Vector vel)
     {
-        _dt = (dt);
-        _pos = (pos);
-        _vel = (vel);
+      _dt = (dt);
+      _pos = (pos);
+      _vel = (vel);
     }
 
     /**
@@ -41,7 +41,7 @@ class DecayedException : Exception
      */
     public string what()
     {
-        return "Error: Satellite decayed";
+      return "Error: Satellite decayed";
     }
 
     /**
@@ -49,7 +49,7 @@ class DecayedException : Exception
      */
     public DateTime Decayed()
     {
-        return _dt;
+      return _dt;
     }
 
     /**
@@ -57,7 +57,7 @@ class DecayedException : Exception
      */
     public Vector Position()
     {
-        return _pos;
+      return _pos;
     }
 
     /**
@@ -65,12 +65,12 @@ class DecayedException : Exception
      */
     public Vector Velocity()
     {
-        return _vel;
+      return _vel;
     }
-        
+
     private DateTime _dt;
     private Vector _pos;
     private Vector _vel;
-};
+  };
 
 }

@@ -16,16 +16,16 @@
 
 
 namespace SGP4
- {
-/**
+{
+  /**
  * @brief Stores a topocentric location (azimuth, elevation, range and range
  * rate).
  *
  * Azimuth and elevation are stored in radians. Range in kilometres. Range
  * rate in kilometres/second.
  */
-struct CoordTopocentric
-{
+  public struct CoordTopocentric
+  {
     /**
      * Default constructor
      */
@@ -45,52 +45,53 @@ struct CoordTopocentric
      * @param[in] rnge_rate range rate in kilometers per second
      */
     public CoordTopocentric(
-            double az,
-            double el,
-            double rnge,
-            double rnge_rate) {
-        azimuth = (az);
-        elevation = (el);
-        range = (rnge);
-        range_rate = (rnge_rate);
+      double az,
+      double el,
+      double rnge,
+      double rnge_rate)
+    {
+      azimuth = (az);
+      elevation = (el);
+      range = (rnge);
+      range_rate = (rnge_rate);
     }
 
     /**
      * Copy constructor
      * @param[in] topo object to copy from
      */
-    public CoordTopocentric( CoordTopocentric topo)
+    public CoordTopocentric(CoordTopocentric topo)
     {
-        azimuth = topo.azimuth;
-        elevation = topo.elevation;
-        range = topo.range;
-        range_rate = topo.range_rate;
+      azimuth = topo.azimuth;
+      elevation = topo.elevation;
+      range = topo.range;
+      range_rate = topo.range_rate;
     }
 
     /**
      * Assignment operator
      * @param[in] topo object to copy from
      */
-//    public static CoordTopocentric operator=(CoordTopocentric topo)
-//    {
-//        if (this != &topo)
-//        {
-//            azimuth = topo.azimuth;
-//            elevation = topo.elevation;
-//            range = topo.range;
-//            range_rate = topo.range_rate;
-//        }
-//        return *this;
-//    }
+    //    public static CoordTopocentric operator=(CoordTopocentric topo)
+    //    {
+    //        if (this != &topo)
+    //        {
+    //            azimuth = topo.azimuth;
+    //            elevation = topo.elevation;
+    //            range = topo.range;
+    //            range_rate = topo.range_rate;
+    //        }
+    //        return *this;
+    //    }
 
     /**
      * Equality operator
      * @param[in] topo value to check
      * @returns whether the object is equal
      */
-    public static bool operator==( CoordTopocentric topo, CoordTopocentric b)
+    public static bool operator==(CoordTopocentric topo, CoordTopocentric b)
     {
-        return b.IsEqual(topo);
+      return b.IsEqual(topo);
     }
 
     /**
@@ -100,7 +101,7 @@ struct CoordTopocentric
      */    
     public static bool operator !=(CoordTopocentric topo, CoordTopocentric b)
     {
-        return !b.IsEqual(topo);
+      return !b.IsEqual(topo);
     }
 
     /**
@@ -128,18 +129,18 @@ struct CoordTopocentric
     /** range rate in kilometers per second */
     public double range_rate;
 
-    private bool IsEqual( CoordTopocentric topo)
+    private bool IsEqual(CoordTopocentric topo)
     {
-        bool equal = false;
-        if (azimuth == topo.azimuth &&
-                elevation == topo.elevation &&
-                range == topo.range &&
-                range_rate == topo.range_rate)
+      bool equal = false;
+      if (azimuth == topo.azimuth &&
+            elevation == topo.elevation &&
+            range == topo.range &&
+            range_rate == topo.range_rate)
         {
-            equal = true;
+          equal = true;
         }
-        return equal;
+      return equal;
     }
-}
+  }
 
 }

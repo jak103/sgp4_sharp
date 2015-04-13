@@ -21,7 +21,7 @@ namespace SGP4
   /**
  * @brief Stores an Earth-centered inertial position for a particular time.
  */
-  class Eci
+  public class Eci
   {
     /**
      * @param[in] dt the date to be used for this position
@@ -29,25 +29,25 @@ namespace SGP4
      * @param[in] longitude the longitude in degrees
      * @param[in] altitude the altitude in kilometers
      */
-    public Eci (DateTime dt, double latitude, double longitude, double altitude)
+    public Eci(DateTime dt, double latitude, double longitude, double altitude)
     {
-      ToEci (dt, new CoordGeodetic (latitude, longitude, altitude));
+      ToEci(dt, new CoordGeodetic(latitude, longitude, altitude));
     }
 
     /**
      * @param[in] dt the date to be used for this position
      * @param[in] geo the position
      */
-    public Eci (DateTime dt, CoordGeodetic geo)
+    public Eci(DateTime dt, CoordGeodetic geo)
     {
-      ToEci (dt, geo);
+      ToEci(dt, geo);
     }
 
     /**
      * @param[in] dt the date to be used for this position
      * @param[in] position
      */
-    public Eci (DateTime dt, Vector position)
+    public Eci(DateTime dt, Vector position)
     {
       m_dt = dt;
       m_position = position;
@@ -58,7 +58,7 @@ namespace SGP4
      * @param[in] position the position
      * @param[in] velocity the velocity
      */
-    public Eci (DateTime dt, Vector position, Vector velocity)
+    public Eci(DateTime dt, Vector position, Vector velocity)
     {
       m_dt = dt;
       m_position = position;
@@ -70,7 +70,7 @@ namespace SGP4
      * @param dt the date to compare
      * @returns true if the object matches
      */
-    public static bool operator== (Eci e, DateTime dt)
+    public static bool operator==(Eci e, DateTime dt)
     {
       return e.m_dt == dt;
     }
@@ -80,7 +80,7 @@ namespace SGP4
      * @param dt the date to compare
      * @returns true if the object doesn't match
      */
-    public static bool operator!= (Eci e, DateTime dt)
+    public static bool operator!=(Eci e, DateTime dt)
     {
       return e.m_dt != dt;
     }
@@ -90,15 +90,15 @@ namespace SGP4
      * @param dt new date
      * @param geo new geodetic position
      */
-    public void Update (DateTime dt, CoordGeodetic geo)
+    public void Update(DateTime dt, CoordGeodetic geo)
     {
-      ToEci (dt, geo);
+      ToEci(dt, geo);
     }
 
     /**
      * @returns the position
      */
-    public Vector Position ()
+    public Vector Position()
     {
       return m_position;
     }
@@ -106,7 +106,7 @@ namespace SGP4
     /**
      * @returns the velocity
      */
-    public Vector Velocity ()
+    public Vector Velocity()
     {
       return m_velocity;
     }
@@ -114,7 +114,7 @@ namespace SGP4
     /**
      * @returns the date
      */
-    public DateTime GetDateTime ()
+    public DateTime GetDateTime()
     {
       return m_dt;
     }
@@ -122,38 +122,39 @@ namespace SGP4
     /**
      * @returns the position in geodetic form
      */
-    public CoordGeodetic ToGeodetic ()
+    public CoordGeodetic ToGeodetic()
     {
-      double theta = Util.AcTan (m_position.y, m_position.x);
+      double theta = Util.AcTan(m_position.y, m_position.x);
      
-      double lon = Util.WrapNegPosPI (theta
-                   - m_dt.ToGreenwichSiderealTime ());
+      double lon = Util.WrapNegPosPI(theta
+                   - m_dt.ToGreenwichSiderealTime());
      
-      double r = Math.Sqrt ((m_position.x * m_position.x)
+      double r = Math.Sqrt((m_position.x * m_position.x)
                  + (m_position.y * m_position.y));
      
       double e2 = Global.kF * (2.0 - Global.kF);
       
-      double lat = Util.AcTan (m_position.z, r);
+      double lat = Util.AcTan(m_position.z, r);
       double phi = 0.0;
       double c = 0.0;
       int cnt = 0;
 
-      do {
-        phi = lat;
-        double sinphi = Math.Sin (phi);
-        c = 1.0 / Math.Sqrt (1.0 - e2 * sinphi * sinphi);
-        lat = Util.AcTan (m_position.z + Global.kXKMPER * c * e2 * sinphi, r);
-        cnt++;
-      } while (Math.Abs (lat - phi) >= 1e-10 && cnt < 10);
+      do
+        {
+          phi = lat;
+          double sinphi = Math.Sin(phi);
+          c = 1.0 / Math.Sqrt(1.0 - e2 * sinphi * sinphi);
+          lat = Util.AcTan(m_position.z + Global.kXKMPER * c * e2 * sinphi, r);
+          cnt++;
+        } while (Math.Abs(lat - phi) >= 1e-10 && cnt < 10);
 
-      double alt = r / Math.Cos (lat) - Global.kXKMPER * c;
+      double alt = r / Math.Cos(lat) - Global.kXKMPER * c;
 
-      return new CoordGeodetic (lat, lon, alt, true);
+      return new CoordGeodetic(lat, lon, alt, true);
     }
 
      
-    private void ToEci (DateTime dt, CoordGeodetic geo)
+    private void ToEci(DateTime dt, CoordGeodetic geo)
     {
       /*
      * set date
@@ -165,15 +166,15 @@ namespace SGP4
       /*
      * Calculate Local Mean Sidereal Time for observers longitude
      */
-      double theta = m_dt.ToLocalMeanSiderealTime (geo.longitude);
+      double theta = m_dt.ToLocalMeanSiderealTime(geo.longitude);
 
       /*
      * take into account earth flattening
      */
       double c = 1.0
-                 / Math.Sqrt (1.0 + Global.kF * (Global.kF - 2.0) * Math.Pow (Math.Sin (geo.latitude), 2.0));
-      double s = Math.Pow (1.0 - Global.kF, 2.0) * c;
-      double achcp = (Global.kXKMPER * c + geo.altitude) * Math.Cos (geo.latitude);
+                 / Math.Sqrt(1.0 + Global.kF * (Global.kF - 2.0) * Math.Pow(Math.Sin(geo.latitude), 2.0));
+      double s = Math.Pow(1.0 - Global.kF, 2.0) * c;
+      double achcp = (Global.kXKMPER * c + geo.altitude) * Math.Cos(geo.latitude);
 
       /*
      * X position in km
@@ -181,10 +182,10 @@ namespace SGP4
      * Z position in km
      * W magnitude in km
      */
-      m_position.x = achcp * Math.Cos (theta);
-      m_position.y = achcp * Math.Sin (theta);
-      m_position.z = (Global.kXKMPER * s + geo.altitude) * Math.Sin (geo.latitude);
-      m_position.w = m_position.Magnitude ();
+      m_position.x = achcp * Math.Cos(theta);
+      m_position.y = achcp * Math.Sin(theta);
+      m_position.z = (Global.kXKMPER * s + geo.altitude) * Math.Sin(geo.latitude);
+      m_position.w = m_position.Magnitude();
 
       /*
      * X velocity in km/s
@@ -195,7 +196,7 @@ namespace SGP4
       m_velocity.x = -mfactor * m_position.y;
       m_velocity.y = mfactor * m_position.x;
       m_velocity.z = 0.0;
-      m_velocity.w = m_velocity.Magnitude ();
+      m_velocity.w = m_velocity.Magnitude();
     }
 
 

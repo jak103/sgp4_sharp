@@ -21,39 +21,39 @@ namespace SGP4
   /**
  * @brief The extracted orbital elements used by the SGP4 propagator.
  */
-  class OrbitalElements
+  public class OrbitalElements
   {
-    public OrbitalElements (Tle tle)
+    public OrbitalElements(Tle tle)
     {
       /*
      * extract and format tle data
      */
-      mean_anomoly_ = tle.MeanAnomaly (false);
-      ascending_node_ = tle.RightAscendingNode (false);
-      argument_perigee_ = tle.ArgumentPerigee (false);
-      eccentricity_ = tle.Eccentricity ();
-      inclination_ = tle.Inclination (false);
-      mean_motion_ = tle.MeanMotion () * Global.kTWOPI / Global.kMINUTES_PER_DAY;
-      bstar_ = tle.BStar ();
-      epoch_ = tle.Epoch ();
+      mean_anomoly_ = tle.MeanAnomaly(false);
+      ascending_node_ = tle.RightAscendingNode(false);
+      argument_perigee_ = tle.ArgumentPerigee(false);
+      eccentricity_ = tle.Eccentricity();
+      inclination_ = tle.Inclination(false);
+      mean_motion_ = tle.MeanMotion() * Global.kTWOPI / Global.kMINUTES_PER_DAY;
+      bstar_ = tle.BStar();
+      epoch_ = tle.Epoch();
 
       /*
      * recover original mean motion (xnodp) and semimajor axis (aodp)
      * from input elements
      */
-      double a1 = Math.Pow (Global.kXKE / MeanMotion (), Global.kTWOTHIRD);
-      double cosio = Math.Cos (Inclination ());
+      double a1 = Math.Pow(Global.kXKE / MeanMotion(), Global.kTWOTHIRD);
+      double cosio = Math.Cos(Inclination());
       double theta2 = cosio * cosio;
       double x3thm1 = 3.0 * theta2 - 1.0;
-      double eosq = Eccentricity () * Eccentricity ();
+      double eosq = Eccentricity() * Eccentricity();
       double betao2 = 1.0 - eosq;
-      double betao = Math.Sqrt (betao2);
+      double betao = Math.Sqrt(betao2);
       double temp = (1.5 * Global.kCK2) * x3thm1 / (betao * betao2);
       double del1 = temp / (a1 * a1);
       double a0 = a1 * (1.0 - del1 * (1.0 / 3.0 + del1 * (1.0 + del1 * 134.0 / 81.0)));
       double del0 = temp / (a0 * a0);
 
-      recovered_mean_motion_ = MeanMotion () / (1.0 + del0);
+      recovered_mean_motion_ = MeanMotion() / (1.0 + del0);
       /*
      * alternative way to calculate
      * doesnt affect final results
@@ -64,14 +64,14 @@ namespace SGP4
       /*
      * find perigee and period
      */
-      perigee_ = (RecoveredSemiMajorAxis () * (1.0 - Eccentricity ()) - Global.kAE) * Global.kXKMPER;
-      period_ = Global.kTWOPI / RecoveredMeanMotion ();
+      perigee_ = (RecoveredSemiMajorAxis() * (1.0 - Eccentricity()) - Global.kAE) * Global.kXKMPER;
+      period_ = Global.kTWOPI / RecoveredMeanMotion();
     }
 
     /*
      * XMO
      */
-    public double MeanAnomoly ()
+    public double MeanAnomoly()
     {
       return mean_anomoly_;
     }
@@ -79,7 +79,7 @@ namespace SGP4
     /*
      * XNODEO
      */
-    public double AscendingNode ()
+    public double AscendingNode()
     {
       return ascending_node_;
     }
@@ -87,7 +87,7 @@ namespace SGP4
     /*
      * OMEGAO
      */
-    public double ArgumentPerigee ()
+    public double ArgumentPerigee()
     {
       return argument_perigee_;
     }
@@ -95,7 +95,7 @@ namespace SGP4
     /*
      * EO
      */
-    public double Eccentricity ()
+    public double Eccentricity()
     {
       return eccentricity_;
     }
@@ -103,7 +103,7 @@ namespace SGP4
     /*
      * XINCL
      */
-    public double Inclination ()
+    public double Inclination()
     {
       return inclination_;
     }
@@ -111,7 +111,7 @@ namespace SGP4
     /*
      * XNO
      */
-    public double MeanMotion ()
+    public double MeanMotion()
     {
       return mean_motion_;
     }
@@ -119,7 +119,7 @@ namespace SGP4
     /*
      * BSTAR
      */
-    public double BStar ()
+    public double BStar()
     {
       return bstar_;
     }
@@ -127,7 +127,7 @@ namespace SGP4
     /*
      * AODP
      */
-    public double RecoveredSemiMajorAxis ()
+    public double RecoveredSemiMajorAxis()
     {
       return recovered_semi_major_axis_;
     }
@@ -135,7 +135,7 @@ namespace SGP4
     /*
      * XNODP
      */
-    public double RecoveredMeanMotion ()
+    public double RecoveredMeanMotion()
     {
       return recovered_mean_motion_;
     }
@@ -143,7 +143,7 @@ namespace SGP4
     /*
      * PERIGE
      */
-    public double Perigee ()
+    public double Perigee()
     {
       return perigee_;
     }
@@ -151,7 +151,7 @@ namespace SGP4
     /*
      * Period in minutes
      */
-    public double Period ()
+    public double Period()
     {
       return period_;
     }
@@ -159,7 +159,7 @@ namespace SGP4
     /*
      * EPOCH
      */
-    public DateTime Epoch ()
+    public DateTime Epoch()
     {
       return epoch_;
     }
