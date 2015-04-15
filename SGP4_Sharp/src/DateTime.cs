@@ -643,22 +643,21 @@ namespace SGP4_Sharp
 
     public override string ToString()
     {
-      return this.ToSystemDateTime().ToString();
-//
-//      StringBuilder builder = new StringBuilder();
-//      int year = 0;
-//      int month = 0;
-//      int day = 0;
-//      FromTicks(ref year, ref month, ref day);
-//                
-//      builder.Append(String.Format("{0}-", year));
-//      builder.Append(String.Format("{0}-", month));
-//      builder.Append(String.Format("{0} ", day));
-//      builder.Append(String.Format("{0}:", Hour()));
-//      builder.Append(String.Format("{0}:", Minute()));
-//      builder.Append(String.Format("{0}.", Second()));
-//      builder.Append(String.Format("{0} UTC", Microsecond()));
-//      return builder.ToString();
+      StringBuilder builder = new StringBuilder();
+      int year = 0;
+      int month = 0;
+      int day = 0;
+      FromTicks(ref year, ref month, ref day);
+
+      builder.Append(String.Format("{0:0000}-", year));
+      builder.Append(String.Format("{0:00}-", month));
+      builder.Append(String.Format("{0:00} ", day));
+      builder.Append(String.Format("{0:00}:", Hour()));
+      builder.Append(String.Format("{0:00}:", Minute()));
+      builder.Append(String.Format("{0:00}.", Second()));
+      builder.Append(String.Format("{0:0000} UTC", Microsecond()));
+
+      return builder.ToString();
     }
 
     public static DateTime Parse(string dateTimeText)
