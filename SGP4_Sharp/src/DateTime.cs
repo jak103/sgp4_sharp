@@ -663,9 +663,7 @@ namespace SGP4_Sharp
     public static DateTime Parse(string dateTimeText)
     {
       //2015-4-13 0:5:39.0 UTC
-      DateTime dt = new DateTime(System.DateTime.Parse(dateTimeText));
-
-            
+      DateTime dt = new DateTime(System.DateTime.ParseExact(dateTimeText, "yyyy-MM-dd HH:mm:ss.ffff", null));
 
       return dt;
     }
