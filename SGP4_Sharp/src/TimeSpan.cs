@@ -195,9 +195,9 @@ namespace SGP4_Sharp
         builder.Append(String.Format("{0}.", Days()));
       }
 
-      builder.Append(String.Format("{0}:", Hours()));
-      builder.Append(String.Format("{0}:", Minutes()));
-      builder.Append(String.Format("{0}", Seconds()));
+      builder.Append(String.Format("{0:00}:", Hours()));
+      builder.Append(String.Format("{0:00}:", Minutes()));
+      builder.Append(String.Format("{0:00}", Seconds()));
 
       if (Microseconds() != 0)
       {
